@@ -2,4 +2,7 @@
 
 /**
  * @package silverstripe-carousel
+ *
+ * Requires SortableGridField:
+ * http://github.com/UndefinedOffset/SortableGridField
  */

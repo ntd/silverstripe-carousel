@@ -1,0 +1,9 @@
+it:
+    CarouselSeat:
+        SINGULARNAME: 'Alloggiamento carosello'
+        PLURALNAME: 'Alloggiamenti carosello'
+    CarouselPage:
+        SINGULARNAME: 'Pagina carosello'
+        PLURALNAME: 'Pagine carosello'
+        DESCRIPTION: 'Pagina con carosello di immagini allegato'
+        TITLE: 'Carosello'
