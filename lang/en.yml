@@ -1,0 +1,10 @@
+en:
+    CarouselSeat:
+        SINGULARNAME: 'Carousel seat'
+        PLURALNAME: 'Carousel seats'
+    CarouselPage:
+        SINGULARNAME: 'Carousel page'
+        PLURALNAME: 'Carousel pages'
+        DESCRIPTION: 'Page with a carousel of images bound to it'
+        TITLE: 'Carousel'
+        DELAY: 'Carousel delay'
