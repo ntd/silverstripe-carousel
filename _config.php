@@ -6,5 +6,3 @@
  * Requires SortableGridField:
  * http://github.com/UndefinedOffset/SortableGridField
  */
-
-Object::add_extension('SiteConfig', 'CarouselConfig');
