@@ -95,6 +95,21 @@ class CarouselPage extends Page {
 }
 
 class CarouselPage_Controller extends Page_Controller {
+
+    function init() {
+        parent::init();
+
+        $delay = $this->SiteConfig()->CarouselDelay;
+
+        // jquery and bootstrap javascript should be loaded by the
+        // parent controller or by the template
+        Requirements::customScript(<<<JS
+$('.carousel').carousel({
+    interval: $delay
+});
+JS
+        );
+    }
 }
 
 ?>

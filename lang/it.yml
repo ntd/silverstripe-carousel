@@ -7,3 +7,4 @@ it:
         PLURALNAME: 'Pagine carosello'
         DESCRIPTION: 'Pagina con carosello di immagini allegato'
         TITLE: 'Carosello'
+        DELAY: 'Periodo ciclo carosello'
