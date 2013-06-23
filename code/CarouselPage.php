@@ -32,7 +32,7 @@ class CarouselSeat extends DataObject {
     );
 
     static $has_one = array(
-        'Image' => 'Image',
+        'Image' => 'CarouselImage',
         'Page'  => 'CarouselPage'
     );
 
