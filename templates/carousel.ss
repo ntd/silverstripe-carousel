@@ -8,7 +8,7 @@
 			<div class="carousel-caption">
 				<h4>$Image.Title</h4>
 			</div><% end_if %>
-		</div>
+		</div><% end_loop %>
 	</div>
 	<a class="left carousel-control" href="#ss-carousel" data-slide="prev">
 		<span class="glyphicon glyphicon-chevron-left"></span>
