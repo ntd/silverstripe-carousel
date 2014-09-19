@@ -1,10 +1,13 @@
-This module requires
-[SortableGridField](http://github.com/UndefinedOffset/SortableGridField).
-
 It implements the new **CarouselPage** type that adds a new tab in the
 CMS for handling carousel _slots_ and images. The size of the images can
 be customized on a per page basis, and so is the option to show or hide
 the captions.
+
+The slots are empty spaces where the images should be hosted. They
+effectively connect the images to the carousel page. There can be empty
+slots, in which case the carousel will "skip" a turn. The slots can be
+easily reordered with drag and drop, hence the dependency on
+[SortableGridField](https://github.com/UndefinedOffset/SortableGridField).
 
 The `Carousel.ss` template renders a self-contained `<div>` with a
 [Bootstrap carousel](http://getbootstrap.com/javascript/#carousel).
