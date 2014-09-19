@@ -1,0 +1,26 @@
+{
+    "name": "entidi/silverstripe-carousel",
+    "description": "A new page type that implements a carousel",
+    "type": "silverstripe-module",
+    "homepage": "http://silverstripe.entidi.com/",
+    "keywords": ["silverstripe", "carousel", "bootstrap"],
+    "license": "BSD-2-Clause",
+    "authors": [
+        {
+            "name": "Nicola Fontana",
+            "email": "ntd@entidi.it",
+            "homepage": "http://www.entidi.com/",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "http://dev.entidi.com/p/silverstripe-carousel/issues/",
+        "source": "http://dev.entidi.com/p/silverstripe-carousel/source/tree/master/"
+    },
+    "require": {
+        "silverstripe/framework": ">=3.0"
+    },
+    "suggest": {
+        "entidi/silverstrap": "A silverstripe theme that supports silverstripe-carousel out of the box"
+    }
+}
