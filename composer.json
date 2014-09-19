@@ -21,6 +21,9 @@
         "silverstripe/framework": ">=3.0",
         "undefinedoffset/sortablegridfield": "*"
     },
+    "extra": {
+        "installer-name": "carousel"
+    },
     "suggest": {
         "entidi/silverstrap": "A silverstripe theme that supports silverstripe-carousel out of the box"
     }
