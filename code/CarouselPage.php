@@ -1,55 +1,21 @@
 <?php
 
-class CarouselImage extends Image {
-
-    static $cms_thumbnail_width = 416;
-    static $cms_thumbnail_height = 160;
-
-    static $carousel_width = 1470;
-    static $carousel_height = 450;
-
-
-    /**
-     * Resize the image for the carousel
-     *
-     * Generates an image suitable to be used inside the carousel.
-     * Use $Image.Carousel in templates.
-     *
-     * @param   GD $gd  The GD device context
-     * @return  GD      The context containing the resulting image
-     */
-    public function generateCarousel(GD $gd) {
-        $gd->setQuality(85);
-        return $gd->croppedResize($this->stat('carousel_width'),
-                                  $this->stat('carousel_height'));
-    }
-}
-
-class CarouselSeat extends DataObject {
-
-    static $db = array(
-        'Order' => 'Int'
+class CarouselSlot extends DataObject {
+private static $db = array( 'Order' => 'Int'); private static $has_one = array( 'Image' => 'Image', 'Page'  => 'CarouselPage'
     );
-
-    static $has_one = array(
-        'Image' => 'CarouselImage',
-        'Page'  => 'CarouselPage'
-    );
-
-    static $summary_fields = array(
+    private static $summary_fields = array(
         'Image.CMSThumbnail',
         'Image.Title'
     );
+    private static $default_sort = 'Order';
 
-    static $default_sort = 'Order';
 
-
-    function getCMSFields() {
+    public function getCMSFields() {
         $fields = parent::getCMSFields();
 
-        // Set the default image folder to ASSETS_DIR . '/carousel'
+        // Set the default image folder to ASSETS_DIR . '/Carousel'
         $field = $fields->dataFieldByName('Image');
-        $field->setFolderName('carousel');
+        $field->setFolderName('Carousel');
 
         // Remove useless fields
         $fields->removeByName('Order');
@@ -58,39 +24,57 @@ class CarouselSeat extends DataObject {
         return $fields;
     }
 
-    public function getIndex() {
-        // Order is 1-based but bootstrap carousel js is 0-based
-        return $this->Order - 1;
+    public function fieldLabels($includerelations = true) {
+        $labels = parent::fieldLabels($includerelations);
+
+        $labels['Image.CMSThumbnail'] = _t('CarouselSlot.IMAGE');
+        $labels['Image.Title'] = _t('CarouselSlot.CAPTION');
+
+        return $labels;
     }
 }
 
 class CarouselPage extends Page {
 
-    static $icon = 'carousel/img/carousel';
-
-    static $description = 'Standard page with an image carousel bound to it';
-
-    static $has_many = array(
-        'CarouselSeats' => 'CarouselSeat'
+    private static $icon = 'carousel/img/carousel.png';
+    private static $db = array(
+        'Captions' => 'Boolean',
+        'Width'    => 'Int',
+        'Height'   => 'Int'
+    );
+    private static $has_many = array(
+        'Slots'    => 'CarouselSlot'
+    );
+    private static $defaults = array(
+        'Width'    => 800,
+        'Height'   => 200,
+        'Captions' => false
     );
 
-    function getCMSFields() {
+    public function getCMSFields() {
         $fields = parent::getCMSFields();
 
         $config = GridFieldConfig_RelationEditor::create(20);
         $config->addComponent(new GridFieldSortableRows('Order'));
 
-        $tab = new Tab(
-            'CarouselSeat',
-            new GridField('CarouselSeats', _t('CarouselSeat.PLURALNAME'),
-                          $this->CarouselSeats(), $config)
-        );
-        $tab->setTitle(_t('CarouselPage.TITLE'));
+        $tab = Tab::create('Carousel',
+            FieldGroup::create(
+                TextField::create('Width', _t('CarouselPage.db_Width')),
+                TextField::create('Height', _t('CarouselPage.db_Height'))
+            )->setTitle(_t('CarouselSlot.SIZE')),
+
+            CheckboxField::create('Captions', _t('CarouselPage.db_Captions')),
+            GridField::create('Slots', _t('CarouselSlot.PLURALNAME'), $this->Slots(), $config)
+        )->setTitle(_t('CarouselPage.TITLE'));
 
         $tabset = $fields->fieldByName('Root');
         $tabset->push($tab);
 
         return $fields;
+    }
+
+    public function getCMSValidator() {
+        return new RequiredFields(array('Width', 'Height'));
     }
 }
 

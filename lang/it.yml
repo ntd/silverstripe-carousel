@@ -1,9 +1,15 @@
 it:
-    CarouselSeat:
-        SINGULARNAME: 'Alloggiamento carosello'
+    CarouselSlot:
+        SINGULARNAME: 'alloggiamento carosello'
         PLURALNAME: 'Alloggiamenti carosello'
+        IMAGE: 'Immagine'
+        CAPTION: 'Didascalia'
+        SIZE: 'Dimensione immagini'
     CarouselPage:
-        SINGULARNAME: 'Pagina carosello'
+        SINGULARNAME: 'pagina carosello'
         PLURALNAME: 'Pagine carosello'
-        DESCRIPTION: 'Pagina con carosello di immagini allegato'
+        DESCRIPTION: 'Visualizzazione a rotazione di una serie di immagini'
         TITLE: 'Carosello'
+        db_Width: 'Larghezza'
+        db_Height: 'Altezza'
+        db_Captions: 'Mostra le didascalie nel carosello'
