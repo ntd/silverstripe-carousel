@@ -11,6 +11,9 @@ some field to the _Settings_ tab. This will allow to customize some
 aspect of the carousel on a per page basis, such as width and height of
 the images and a flag to show or hide their captions.
 
+Usage
+-----
+
 The `ContentCarousel.ss` template renders a self-contained `<div>` with a
 [Bootstrap carousel](http://getbootstrap.com/javascript/#carousel)
 inside. You can include it in any place inside your pages, e.g.:
