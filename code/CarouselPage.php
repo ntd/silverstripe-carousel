@@ -72,13 +72,15 @@ class CarouselPage extends Page {
     public function getSettingsFields() {
         $fields = parent::getSettingsFields();
 
-        $fields->addFieldToTab('Root.Settings',
-            FieldGroup::create(
-                CheckboxField::create('Captions', _t('CarouselPage.db_Captions')),
-                TextField::create('Width', _t('CarouselPage.db_Width')),
-                TextField::create('Height', _t('CarouselPage.db_Height'))
-            )->setTitle(_t('CarouselPage.SINGULARNAME'))
+        $field = FieldGroup::create(
+            CheckboxField::create('Captions', _t('CarouselPage.db_Captions')),
+            TextField::create('Width', _t('CarouselPage.db_Width')),
+            TextField::create('Height', _t('CarouselPage.db_Height'))
         );
+        $field->setName('Carousel');
+        $field->setTitle(_t('CarouselPage.SINGULARNAME'));
+
+        $fields->addFieldToTab('Root.Settings', $field);
 
         return $fields;
     }
