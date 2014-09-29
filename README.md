@@ -58,6 +58,11 @@ The feature of reordering with drag and drop is provided by the
 [sortablefile](https://github.com/bummzack/sortablefile) module that
 *must* be installed before.
 
-To install silverstripe-carousel you should proceed as usual: drop the
-directory tree in your SilverStripe root and do a `/dev/build/`. You
-will gain the new `CarouselPage` type in the CMS.
+To install silverstripe-carousel itself you should proceed as usual:
+drop the directory tree in your SilverStripe root and do a
+`/dev/build/`. You will gain the new `CarouselPage` type in the CMS.
+
+If you use [composer](https://getcomposer.org/), the dependencies will
+be pulled-in automatically, so you could just run the following command:
+
+    composer require entidi/silverstripe-carousel dev-master
