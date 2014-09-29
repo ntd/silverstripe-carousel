@@ -1,36 +1,38 @@
 <?php
 
-class CarouselSlot extends DataObject {
-private static $db = array( 'Order' => 'Int'); private static $has_one = array( 'Image' => 'Image', 'Page'  => 'CarouselPage'
-    );
-    private static $summary_fields = array(
-        'Image.CMSThumbnail',
-        'Image.Title'
-    );
-    private static $default_sort = 'Order';
+class CarouselImageExtension extends DataExtension {
 
-
-    public function getCMSFields() {
-        $fields = parent::getCMSFields();
-
-        // Set the default image folder to ASSETS_DIR . '/Carousel'
-        $field = $fields->dataFieldByName('Image');
-        $field->setFolderName('Carousel');
-
-        // Remove useless fields
-        $fields->removeByName('Order');
-        $fields->removeByName('PageID');
-
-        return $fields;
+    /**
+     * If $width and $height are greater than 0, it is equivalent to
+     * CroppedImage().
+     *
+     * If only $width is greater than 0, it is equivalent to SetWidth().
+     *
+     * If only $height is greater than 0, it is equivalent to
+     * SetHeight().
+     *
+     * If neither $width or $height are greater than 0, return the
+     * original image.
+     *
+     * @param  Image_Backend $backend
+     * @param  integer $width   The width to set or 0.
+     * @param  integer $height  The height to set or 0.
+     * @return Image_Backend
+     */
+    public function MaybeCroppedImage($width, $height) {
+        return $this->owner->getFormattedImage('MaybeCroppedImage', $width, $height);
     }
 
-    public function fieldLabels($includerelations = true) {
-        $labels = parent::fieldLabels($includerelations);
-
-        $labels['Image.CMSThumbnail'] = _t('CarouselSlot.IMAGE');
-        $labels['Image.Title'] = _t('CarouselSlot.CAPTION');
-
-        return $labels;
+    public function generateMaybeCroppedImage(Image_Backend $backend, $width, $height) {
+        if ($width > 0 && $height > 0) {
+            return $backend->croppedResize($width, $height);
+        } elseif ($width > 0) {
+            return $backend->resizeByWidth($width);
+        } elseif ($height > 0) {
+            return $backend->resizeByHeight($height);
+        } else {
+            return $backend;
+        }
     }
 }
 
@@ -38,47 +40,57 @@ class CarouselPage extends Page {
 
     private static $icon = 'carousel/img/carousel.png';
     private static $db = array(
-        'Captions' => 'Boolean',
-        'Width'    => 'Int',
-        'Height'   => 'Int'
+        'Captions' => 'Boolean default(true)',
+        'Width'    => 'Int default(0)',
+        'Height'   => 'Int default(200)',
     );
-    private static $has_many = array(
-        'Slots'    => 'CarouselSlot'
+    private static $many_many = array(
+        'Images' => 'Image',
+    );
+    private static $many_many_extraFields = array(
+        'Images' => array(
+            'SortOrder' => 'Int',
+        ),
     );
     private static $defaults = array(
-        'Width'    => 800,
+        'Captions' => true,
+        'Width'    => 0,
         'Height'   => 200,
-        'Captions' => false
     );
 
     public function getCMSFields() {
         $fields = parent::getCMSFields();
 
-        $config = GridFieldConfig_RelationEditor::create(20);
-        $config->addComponent(new GridFieldSortableRows('Order'));
-
-        $tab = Tab::create('Carousel',
-            FieldGroup::create(
-                TextField::create('Width', _t('CarouselPage.db_Width')),
-                TextField::create('Height', _t('CarouselPage.db_Height'))
-            )->setTitle(_t('CarouselSlot.SIZE')),
-
-            CheckboxField::create('Captions', _t('CarouselPage.db_Captions')),
-            GridField::create('Slots', _t('CarouselSlot.PLURALNAME'), $this->Slots(), $config)
-        )->setTitle(_t('CarouselPage.TITLE'));
-
-        $tabset = $fields->fieldByName('Root');
-        $tabset->push($tab);
+        $field = new SortableUploadField('Images', _t('CarouselPage.db_Images'));
+        $fields->findOrMakeTab('Root.Images')
+            ->setTitle(_t('CarouselPage.db_Images'))
+            ->push($field);
 
         return $fields;
     }
 
-    public function getCMSValidator() {
-        return new RequiredFields(array('Width', 'Height'));
+    public function getSettingsFields() {
+        $fields = parent::getSettingsFields();
+
+        $fields->addFieldToTab('Root.Settings',
+            FieldGroup::create(
+                CheckboxField::create('Captions', _t('CarouselPage.db_Captions')),
+                TextField::create('Width', _t('CarouselPage.db_Width')),
+                TextField::create('Height', _t('CarouselPage.db_Height'))
+            )->setTitle(_t('CarouselPage.SINGULARNAME'))
+        );
+
+        return $fields;
     }
 }
 
 class CarouselPage_Controller extends Page_Controller {
-}
 
-?>
+    /**
+     * From the controller the images are returned in proper order.
+     * This means `<% loop $Images %>` returns the expected result.
+     */
+    public function Images() {
+        return $this->dataRecord->Images()->Sort('SortOrder');
+    }
+}
