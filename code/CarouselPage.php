@@ -58,10 +58,37 @@ class CarouselPage extends Page {
         'Height'   => 200,
     );
 
+    /**
+     * Search the first class name (that must have a 'Page' suffix) in
+     * the object hierarchy that has a correspoding folder in
+     * ASSETS_PATH, that is a folder with the same name with the 'Page'
+     * suffix stripped out. This folder will be returned and used as
+     * custom folder in the upload field.
+     *
+     * For example, if this class is `HomePage` and it is inherited from
+     * `CarouselPage`, this function will check for `Home` first and
+     * `Carousel` after.
+     *
+     * If no valid folders are found, `false` is returned.
+     */
+    protected function getClassFolder() {
+        for ($class = $this->class; $class; $class = get_parent_class($class)) {
+            $folder = preg_replace('/Page$/', '', $class);
+            if ($folder != $class && is_dir(ASSETS_PATH . '/' . $folder))
+                return $folder;
+        }
+
+        // false is the proper value to set in setFolderName()
+        // to get the default folder (usually 'Uploads').
+        return false;
+    }
+
     public function getCMSFields() {
         $fields = parent::getCMSFields();
 
         $field = new SortableUploadField('Images', _t('CarouselPage.db_Images'));
+        $field->setFolderName($this->getClassFolder());
+
         $fields->findOrMakeTab('Root.Images')
             ->setTitle(_t('CarouselPage.db_Images'))
             ->push($field);
