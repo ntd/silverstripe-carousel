@@ -3,6 +3,8 @@
 /**
  * @package silverstripe-carousel
  *
- * Requires SortableGridField:
- * http://github.com/UndefinedOffset/SortableGridField
+ * Requires sortablefile:
+ * https://github.com/bummzack/sortablefile
  */
+
+Image::add_extension('CarouselImageExtension');

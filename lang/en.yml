@@ -1,15 +1,9 @@
 en:
-    CarouselSlot:
-        SINGULARNAME: 'carousel slot'
-        PLURALNAME: 'Carousel slots'
-        IMAGE: 'Image'
-        CAPTION: 'Caption'
-        SIZE: 'Image size'
     CarouselPage:
-        SINGULARNAME: 'carousel page'
+        SINGULARNAME: 'Carousel page'
         PLURALNAME: 'Carousel pages'
-        DESCRIPTION: 'Show in turn a serie of images'
-        TITLE: 'Carousel'
-        db_Width: 'Width'
-        db_Height: 'Height'
-        db_Captions: 'Show captions inside the carousel'
+        DESCRIPTION: 'Show in turn a series of images'
+        db_Images: 'Image list'
+        db_Captions: 'Show captions inside images'
+        db_Width: 'Image width'
+        db_Height: 'Image height'

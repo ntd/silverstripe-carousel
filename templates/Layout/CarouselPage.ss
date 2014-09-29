@@ -1,4 +1,6 @@
+<%-- This template is silverstrap ready --%>
 <div class="container">
-	<% include Carousel %>
-	<% include Content %>
+	<% include ContentHeader %>
+	<% include ContentCarousel %>
+	<% include ContentBody %>
 </div>

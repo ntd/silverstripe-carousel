@@ -1,30 +1,71 @@
-It implements the new **CarouselPage** type that adds a new tab in the
-CMS for handling carousel _slots_ and images. The size of the images can
-be customized on a per page basis, and so is the option to show or hide
-the captions.
+Silverstripe Carousel
+=====================
 
-The slots are empty spaces where the images should be hosted. They
-effectively connect the images to the carousel page. There can be empty
-slots, in which case the carousel will "skip" a turn. The slots can be
-easily reordered with drag and drop, hence the dependency on
-[SortableGridField](https://github.com/UndefinedOffset/SortableGridField).
+It implements a new page type (_CarouselPage_) that provides everything
+needed to manage a carousel of images.
 
-The `Carousel.ss` template renders a self-contained `<div>` with a
-[Bootstrap carousel](http://getbootstrap.com/javascript/#carousel).
-You can include it in any place inside your page template, e.g.:
+You can do bulk uploads and reorder the images by dragging and dropping
+their thumbnails in a dedicated tab (_Image list_) inside the CMS. The
+same image can be shared among multiple carousels. This module adds also
+some field to the _Settings_ tab. This will allow to customize some
+aspect of the carousel on a per page basis, such as width and height of
+the images and a flag to show or hide their captions.
 
-    <% include Carousel.ss %>
+Usage
+-----
+
+The `ContentCarousel.ss` template renders a self-contained `<div>` with a
+[Bootstrap carousel](http://getbootstrap.com/javascript/#carousel)
+inside. You can include it in any place inside your pages, e.g.:
+
+    <%-- This is a typical Page.ss --%>
+    <h1>$Title</h1>
+    <div class="carousel">
+        <% include ContentCarousel.ss %>
+    </div>
     <%--
         The following chunk of javascript enables the carousel rotation:
-        see the Bootstrap documentation for the available customizations
+        see the Bootstrap docs for the available options.
+        You can (and should) put it in your external javascript file.
     --%>
     <script>
     $(document).ready(function() {
         $('#ss-carousel').carousel();
     });
     </script>
+    <div class="content">
+        $Content
+    </div>
 
 Alternatively, the `CarouselPage.ss` layout template is provided. It
 renders a full (standard) page, though it works out of the box only with
 the [silverstrap](http://dev.entidi.com/p/silverstrap/) theme because it
 relies on some convention adopted by that theme.
+
+Author
+------
+
+This project has been developed by [ntd](mailto:ntd@entidi.it). Its
+[home page](http://silverstripe.entidi.com/) is shared by other
+[SilverStripe](http://www.silverstripe.org/) modules and themes.
+
+To check out the code, report issues or propose enhancements, go to the
+[dedicated tracker](http://dev.entidi.com/p/silverstripe-carousel).
+Alternatively, you can do the same things by leveraging the official
+[github repository](https://github.com/ntd/silverstripe-carousel).
+
+Installation
+------------
+
+The feature of reordering with drag and drop is provided by the
+[sortablefile](https://github.com/bummzack/sortablefile) module that
+*must* be installed before.
+
+To install silverstripe-carousel itself you should proceed as usual:
+drop the directory tree in your SilverStripe root and do a
+`/dev/build/`. You will gain the new `CarouselPage` type in the CMS.
+
+If you use [composer](https://getcomposer.org/), the dependencies will
+be pulled-in automatically, so you could just run the following command:
+
+    composer require entidi/silverstripe-carousel dev-master
