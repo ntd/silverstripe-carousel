@@ -2,14 +2,23 @@ Silverstripe Carousel
 =====================
 
 It implements a new page type (_CarouselPage_) that provides everything
-needed to manage a carousel of images.
+needed to manage a carousel of images. Differently from other carousels,
+this one does not have the concept of seats (or slots), so managing the
+images is **much** easier on the backend side.
 
 You can do bulk uploads and reorder the images by dragging and dropping
 their thumbnails in a dedicated tab (_Image list_) inside the CMS. The
 same image can be shared among multiple carousels. This module adds also
-some field to the _Settings_ tab. This will allow to customize some
-aspect of the carousel on a per page basis, such as width and height of
-the images and a flag to show or hide their captions.
+some field to the _Settings_ tab, allowing the customization of some
+aspect of the carousel on a per page basis (e.g., width and height of
+the images and a flag to show or hide captions).
+
+To improve file organization, if you upload your images from the
+carousel a specific folder is pre-selected (it it exists!) instead of
+the fallback one (`Uploads`). The folder name depends on the class
+hierarchy. If, for example, you inherit your `HomePage` type from
+`CarouselPage`, the code will look for any `Home` or `Carousel` folder
+(in this order) under your assets directory.
 
 Usage
 -----
@@ -23,11 +32,9 @@ inside. You can include it in any place inside your pages, e.g.:
     <div class="carousel">
         <% include ContentCarousel.ss %>
     </div>
-    <%--
-        The following chunk of javascript enables the carousel rotation:
-        see the Bootstrap docs for the available options.
-        You can (and should) put it in your external javascript file.
-    --%>
+    <%-- The following chunk of javascript enables the carousel rotation:
+         see the Bootstrap docs for the available options.
+         You can (and should) put it in your external javascript file. --%>
     <script>
     $(document).ready(function() {
         $('#ss-carousel').carousel();
