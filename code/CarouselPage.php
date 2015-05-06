@@ -38,7 +38,7 @@ class CarouselImageExtension extends DataExtension {
 
 class CarouselPage extends Page {
 
-    private static $icon = 'carousel/img/film.png';
+    private static $icon = 'carousel/img/carousel.png';
     private static $db = array(
         'Captions' => 'Boolean default(true)',
         'Width'    => 'Int default(0)',
