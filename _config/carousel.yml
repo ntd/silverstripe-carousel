@@ -1,0 +1,13 @@
+---
+Name: carousel
+After:
+    - 'framework/*'
+    - 'sortablefile/*'
+---
+Image:
+    extensions:
+        - CarouselImageExtension
+GDBackend:
+    default_quality: 90
+ImagickBackend:
+    default_quality: 90
