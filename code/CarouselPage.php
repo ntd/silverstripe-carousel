@@ -36,6 +36,39 @@ class CarouselImageExtension extends DataExtension {
     }
 }
 
+/**
+ * This class is needed in order to handle the 'Content' field of the
+ * 'File' table with the WYSIWYG editor. That field is TEXT, hence just
+ * using HtmlEditorField will result in an error when the 'saveInto'
+ * method is called.
+ */
+class CarouselCaptionField extends HtmlEditorField {
+
+    public function __construct($name, $title = null, $value = '') {
+        parent::__construct($name, $title, $value);
+        $this->rows = 5;
+        // The .htmleditor class enables TinyMCE
+        $this->addExtraClass('htmleditor');
+    }
+
+    /**
+     * Implementation directly borrowed from HtmlEditorField
+     * without the blocking or useless code.
+     */
+    public function saveInto(DataObjectInterface $record) {
+        $htmlValue = Injector::inst()->create('HTMLValue', $this->value);
+
+        // Sanitise if requested
+        if($this->config()->sanitise_server_side) {
+            $santiser = Injector::inst()->create('HtmlEditorSanitiser', HtmlEditorConfig::get_active());
+            $santiser->sanitise($htmlValue);
+        }
+
+        $this->extend('processHTML', $htmlValue);
+        $record->{$this->name} = $htmlValue->getContent();
+    }
+}
+
 class CarouselPage extends Page {
 
     private static $icon = 'carousel/img/carousel.png';
@@ -89,9 +122,21 @@ class CarouselPage extends Page {
         $field = new SortableUploadField('Images', _t('CarouselPage.db_Images'));
         $field->setFolderName($this->getClassFolder());
 
-        $fields->findOrMakeTab('Root.Images')
-            ->setTitle(_t('CarouselPage.db_Images'))
-            ->push($field);
+        // Enable HTML caption handling if captions are enabled
+        if ($this->Captions) {
+            $field->setFileEditFields(FieldList::create(
+                CarouselCaptionField::create('Content', _t('CarouselPage.Caption'))
+            ));
+        }
+
+        $root = $fields->fieldByName('Root');
+        $tab = $root->fieldByName('Images');
+        if (! $tab) {
+            $tab = Tab::create('Images')
+                ->setTitle(_t('CarouselPage.db_Images'));
+            $root->insertAfter($tab, 'Main');
+        }
+        $tab->push($field);
 
         return $fields;
     }

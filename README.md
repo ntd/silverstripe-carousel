@@ -49,6 +49,19 @@ renders a full (standard) page, though it works out of the box only with
 the [silverstrap](http://dev.entidi.com/p/silverstrap/) theme because it
 relies on some convention adopted by that theme.
 
+### Image captions
+
+HTML captions are allowed. This is internally done by leveraging the
+`Content` field of the `File` table (typically empty). This is supposed
+to be an HTML chunk despite being defined as a plain text field by the
+SilverStripe code.
+
+If the captions are enabled, they can be edited directly inside the
+_Image list_ tab by clicking the _Edit_ button.
+
+When `Content` is not defined, an `<h4>` element with the image title is
+used instead: see `templates/Includes/ImageCaption.ss` for details.
+
 Author
 ------
 

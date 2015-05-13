@@ -3,6 +3,7 @@ en:
         SINGULARNAME: 'Carousel page'
         PLURALNAME: 'Carousel pages'
         DESCRIPTION: 'Show in turn a series of images'
+        Caption: 'Caption'
         db_Images: 'Image list'
         db_Captions: 'Show captions inside images'
         db_Width: 'Image width'
