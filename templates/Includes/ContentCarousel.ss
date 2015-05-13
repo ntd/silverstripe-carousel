@@ -8,9 +8,7 @@
 			<div class="carousel-inner"><% loop $Images %>
 			    <div class="item<% if $First %> active<% end_if %>"><% with $MaybeCroppedImage($Top.Width,$Top.Height) %>
 					<img src="$URL" alt="$Title" width="$Width" height="$Height"><% end_with %><% if $Top.Captions %>
-					<div class="carousel-caption">
-						<h4>$Title</h4>
-						</div><% end_if %>
+					<% include ImageCaption %><% end_if %>
 				</div><% end_loop %>
 			</div>
 			<a class="left carousel-control" href="#ss-carousel" role="button" data-slide="prev">
