@@ -1,6 +1,12 @@
-<%-- This template is silverstrap ready --%>
-<div class="container">
-	<% include ContentHeader %>
+<%-- silverstrap contains a dedicated template that overrides this one --%>
+<div class="container"><% if $Title %>
+	<div class="page-header">
+		<h1>$Title</h1>
+	</div><% end_if %>
 	<% include ContentCarousel %>
-	<% include ContentBody %>
+	<div class="row">
+	<main class="col-xs-12 typography">
+		$Content
+		$Form
+	</main>
 </div>
