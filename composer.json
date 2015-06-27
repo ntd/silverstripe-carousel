@@ -1,6 +1,6 @@
 {
     "name": "entidi/silverstripe-carousel",
-    "description": "A new page type that implements a carousel",
+    "description": "A new page type that provides a carousel with easily reorderable items and custom HTML captions",
     "type": "silverstripe-module",
     "homepage": "http://silverstripe.entidi.com/",
     "keywords": ["silverstripe", "carousel", "bootstrap"],
