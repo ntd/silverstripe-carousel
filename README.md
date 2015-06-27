@@ -44,10 +44,14 @@ inside. You can include it in any place inside your pages, e.g.:
         $Content
     </div>
 
-Alternatively, the `CarouselPage.ss` layout template is provided. It
-renders a full (standard) page, though it works out of the box only with
-the [silverstrap](http://dev.entidi.com/p/silverstrap/) theme because it
-relies on some convention adopted by that theme.
+Alternatively, a basic `CarouselPage.ss` template based on the
+[bxSlider](http://bxslider.com/) JQuery module is provided, so
+_CarouselPage_ instances should work out of the box with minimum
+external dependencies.
+
+A third approach is to use the [silverstrap](http://dev.entidi.com/p/silverstrap/)
+theme that provides its own `CarouselPage.ss` template, overriding the
+one provided by this module.
 
 ### Image captions
 
