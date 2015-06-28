@@ -147,14 +147,17 @@ class CarouselPage extends Page {
         $group->setTitle(_t('CarouselPage.SINGULARNAME'));
         $fields->addFieldToTab('Root.Settings', $group);
 
-        $field = new CheckboxField('Captions', _t('CarouselPage.db_Captions'));
-        $group->push($field);
+        $subgroup = new FieldGroup();
+        $group->push($subgroup);
 
         $field = new TextField('Width', _t('CarouselPage.db_Width'));
-        $group->push($field);
+        $subgroup->push($field);
 
         $field = new TextField('Height', _t('CarouselPage.db_Height'));
-        $group->push($field);
+        $subgroup->push($field);
+
+        $field = new CheckboxField('Captions', _t('CarouselPage.db_Captions'));
+        $subgroup->push($field);
 
         return $fields;
     }
