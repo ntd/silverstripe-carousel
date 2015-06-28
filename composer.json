@@ -3,7 +3,7 @@
     "description": "A new page type that provides a carousel with easily reorderable items and custom HTML captions",
     "type": "silverstripe-module",
     "homepage": "http://silverstripe.entidi.com/",
-    "keywords": ["silverstripe", "carousel", "bootstrap"],
+    "keywords": ["silverstripe", "carousel", "bootstrap", "bxslider", "silverstrap"],
     "license": "BSD-2-Clause",
     "authors": [
         {
