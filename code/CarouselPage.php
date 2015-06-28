@@ -150,16 +150,23 @@ class CarouselPage extends Page {
         $subgroup = new FieldGroup();
         $group->push($subgroup);
 
-        $field = new TextField('Width', _t('CarouselPage.db_Width'));
+        $field = new NumericField('Width', _t('CarouselPage.db_Width'));
         $subgroup->push($field);
 
-        $field = new TextField('Height', _t('CarouselPage.db_Height'));
+        $field = new NumericField('Height', _t('CarouselPage.db_Height'));
         $subgroup->push($field);
 
         $field = new CheckboxField('Captions', _t('CarouselPage.db_Captions'));
         $subgroup->push($field);
 
         return $fields;
+    }
+
+    public function getCMSValidator() {
+        return new RequiredFields(
+            'ThumbnailWidth',
+            'ThumbnailHeight'
+        );
     }
 }
 
