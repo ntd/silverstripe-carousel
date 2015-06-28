@@ -22,7 +22,10 @@
         "bummzack/sortablefile": "dev-master#48c3fb4c6b37db4e109ec5558e3db6d20c82a75b"
     },
     "extra": {
-        "installer-name": "carousel"
+        "installer-name": "carousel",
+        "screenshots": [
+            "http://silverstripe.entidi.com/assets/carousel.jpeg"
+        ]
     },
     "suggest": {
         "entidi/silverstrap": "A silverstripe theme that supports silverstripe-carousel out of the box"
