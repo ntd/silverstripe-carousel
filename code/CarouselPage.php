@@ -72,23 +72,21 @@ class CarouselCaptionField extends HtmlEditorField {
 class CarouselPage extends Page {
 
     private static $icon = 'carousel/img/carousel.png';
+
     private static $db = array(
-        'Captions' => 'Boolean default(true)',
-        'Width'    => 'Int default(0)',
-        'Height'   => 'Int default(200)',
+        'Captions' => 'Boolean',
+        'Width'    => 'Int',
+        'Height'   => 'Int',
     );
+
     private static $many_many = array(
-        'Images' => 'Image',
+        'Images'   => 'Image',
     );
+
     private static $many_many_extraFields = array(
-        'Images' => array(
+        'Images'   => array(
             'SortOrder' => 'Int',
         ),
-    );
-    private static $defaults = array(
-        'Captions' => true,
-        'Width'    => 0,
-        'Height'   => 200,
     );
 
     /**
