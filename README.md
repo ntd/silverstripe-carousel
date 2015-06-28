@@ -23,35 +23,43 @@ hierarchy. If, for example, you inherit your `HomePage` type from
 Usage
 -----
 
-The `ContentCarousel.ss` template renders a self-contained `<div>` with a
-[Bootstrap carousel](http://getbootstrap.com/javascript/#carousel)
-inside. You can include it in any place inside your pages, e.g.:
+This module is front end agnostic, that is you can use the javascript
+library you prefer by writing a proper template.
 
-    <%-- This is a typical Page.ss --%>
-    <h1>$Title</h1>
-    <div class="carousel">
-        <% include ContentCarousel.ss %>
+Out of the box there ara a couple of templates inside `Includes` that
+implement a [Bootstrap](http://getbootstrap.com/javascript/#carousel)
+(`ContentCarousel_bootstrap.ss`) or a [bxSlider](http://bxslider.com/)
+(`ContentCarousel_bxslider.ss`) carousel.
+
+You can include one of them in any place inside your page template, e.g.
+a basic Bootstrap layout template could look like this one:
+
+    <%-- Layout/CarouselPage.ss --%>
+    <div class="page-header">
+        <h1>$Title</h1>
     </div>
-    <%-- The following chunk of javascript enables the carousel rotation:
-         see the Bootstrap docs for the available options.
-         You can (and should) put it in your external javascript file. --%>
-    <script>
-    $(document).ready(function() {
-        $('#ss-carousel').carousel();
-    });
-    </script>
-    <div class="content">
+    <% include ContentCarousel_bootstrap.ss %>
+    <div class="row typography">
         $Content
     </div>
 
-Alternatively, a basic `CarouselPage.ss` template based on the
-[bxSlider](http://bxslider.com/) JQuery module is provided, so
-_CarouselPage_ instances should work out of the box with minimum
-external dependencies.
+    <%-- Include Bootstrap 3 --%>
+    <% require CSS("//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.min.css") %>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/g/jquery@1,bootstrap@3"></script>
 
-A third approach is to use the [silverstrap](http://dev.entidi.com/p/silverstrap/)
-theme that provides its own `CarouselPage.ss` template, overriding the
-one provided by this module.
+    <%-- Enable the carousel --%>
+    <script type="text/javascript">
+        \$(document).ready(function() {
+            \$('#ss-carousel').carousel();
+        });
+    </script>
+
+The default layout implements a _bxSlider_ version of the above code.
+
+Alternatively, the [silverstrap](http://dev.entidi.com/p/silverstrap/)
+theme already supports this module out of the box. If you intend to
+leverage _Bootstrap_, consider using this theme either by overriding
+or by modifying it.
 
 ### Image captions
 

@@ -4,6 +4,11 @@ After:
     - 'framework/*'
     - 'sortablefile/*'
 ---
+CarouselPage:
+    defaults:
+        Captions: true
+        Width: 0
+        Height: 200
 Image:
     extensions:
         - CarouselImageExtension
