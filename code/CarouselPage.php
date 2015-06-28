@@ -122,16 +122,16 @@ class CarouselPage extends Page {
 
         // Enable HTML caption handling if captions are enabled
         if ($this->Captions) {
-            $field->setFileEditFields(FieldList::create(
-                CarouselCaptionField::create('Content', _t('CarouselPage.Caption'))
-            ));
+            $caption = new CarouselCaptionField('Content', _t('CarouselPage.Caption'));
+            $field->setFileEditFields(new FieldList($caption));
+            unset($caption);
         }
 
         $root = $fields->fieldByName('Root');
         $tab = $root->fieldByName('Images');
         if (! $tab) {
-            $tab = Tab::create('Images')
-                ->setTitle(_t('CarouselPage.db_Images'));
+            $tab = new Tab('Images');
+            $tab->setTitle(_t('CarouselPage.db_Images'));
             $root->insertAfter($tab, 'Main');
         }
         $tab->push($field);
@@ -142,15 +142,19 @@ class CarouselPage extends Page {
     public function getSettingsFields() {
         $fields = parent::getSettingsFields();
 
-        $field = FieldGroup::create(
-            CheckboxField::create('Captions', _t('CarouselPage.db_Captions')),
-            TextField::create('Width', _t('CarouselPage.db_Width')),
-            TextField::create('Height', _t('CarouselPage.db_Height'))
-        );
-        $field->setName('Carousel');
-        $field->setTitle(_t('CarouselPage.SINGULARNAME'));
+        $group = new FieldGroup();
+        $group->setName('Carousel');
+        $group->setTitle(_t('CarouselPage.SINGULARNAME'));
+        $fields->addFieldToTab('Root.Settings', $group);
 
-        $fields->addFieldToTab('Root.Settings', $field);
+        $field = new CheckboxField('Captions', _t('CarouselPage.db_Captions'));
+        $group->push($field);
+
+        $field = new TextField('Width', _t('CarouselPage.db_Width'));
+        $group->push($field);
+
+        $field = new TextField('Height', _t('CarouselPage.db_Height'));
+        $group->push($field);
 
         return $fields;
     }
