@@ -11,7 +11,10 @@ their thumbnails in a dedicated tab (_Image list_) inside the CMS. The
 same image can be shared among multiple carousels. This module adds also
 some field to the _Settings_ tab, allowing the customization of some
 aspect of the carousel on a per page basis (e.g., width and height of
-the images and a flag to show or hide captions).
+the images and a flag to show or hide captions). Support for the
+[translatable](https://github.com/silverstripe/silverstripe-translatable)
+module is provided out of the box, i.e. when creating a translation,
+the new page will borrow the original carousel images.
 
 To improve file organization, if you upload your images from the
 carousel a specific folder is pre-selected (it it exists!) instead of

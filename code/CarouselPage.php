@@ -168,6 +168,25 @@ class CarouselPage extends Page {
             'ThumbnailHeight'
         );
     }
+
+    /**
+     * Out of the box support for silverstripe/silverstripe-translatable.
+     *
+     * It the translatable module is not used, this will simply be a
+     * dead method.
+    */
+    public function onTranslatableCreate($save) {
+        // Chain up the parent method, if it exists
+        if (method_exists('Page', 'onTranslatableCreate'))
+            parent::onTranslatableCreate($save);
+
+        $master = $this->getTranslation(Translatable::default_locale());
+
+        foreach ($master->Images() as $master_image) {
+            $image = $master_image->duplicate($save);
+            $this->Images()->add($image);
+        }
+    }
 }
 
 class CarouselPage_Controller extends Page_Controller {
