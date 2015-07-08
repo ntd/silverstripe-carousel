@@ -57,12 +57,12 @@ a basic Bootstrap layout template could look like this one:
         });
     </script>
 
-The default layout implements a _bxSlider_ version of the above code.
+The default layout (`CarouselPage.ss`) embeds a _bxSlider_ carousel.
 
 Alternatively, the [silverstrap](http://dev.entidi.com/p/silverstrap/)
 theme already supports this module out of the box. If you intend to
-leverage _Bootstrap_, consider using this theme either by overriding
-or by modifying it.
+leverage _Bootstrap_, consider using this theme instead, either by
+overriding or by modifying it.
 
 ### Image captions
 
