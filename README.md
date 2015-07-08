@@ -29,7 +29,7 @@ Usage
 This module is front end agnostic, that is you can use the javascript
 library you prefer by writing a proper template.
 
-Out of the box there ara a couple of templates inside `Includes` that
+Out of the box there are a couple of templates inside `Includes` that
 implement a [Bootstrap](http://getbootstrap.com/javascript/#carousel)
 (`ContentCarousel_bootstrap.ss`) or a [bxSlider](http://bxslider.com/)
 (`ContentCarousel_bxslider.ss`) carousel.
