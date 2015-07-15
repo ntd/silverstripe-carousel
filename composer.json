@@ -19,7 +19,7 @@
     },
     "require": {
         "silverstripe/framework": "~3.1",
-        "bummzack/sortablefile": "dev-master#48c3fb4c6b37db4e109ec5558e3db6d20c82a75b"
+        "bummzack/sortablefile": "~1.1"
     },
     "extra": {
         "installer-name": "carousel",
