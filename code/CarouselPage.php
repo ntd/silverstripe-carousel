@@ -4,7 +4,7 @@ class CarouselImageExtension extends DataExtension {
 
     /**
      * If $width and $height are greater than 0, it is equivalent to
-     * CroppedImage().
+     * Image_Backend::croppedResize().
      *
      * If only $width is greater than 0, it is equivalent to SetWidth().
      *
@@ -14,7 +14,6 @@ class CarouselImageExtension extends DataExtension {
      * If neither $width or $height are greater than 0, return the
      * original image.
      *
-     * @param  Image_Backend $backend
      * @param  integer $width   The width to set or 0.
      * @param  integer $height  The height to set or 0.
      * @return Image_Backend
