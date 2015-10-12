@@ -4,7 +4,7 @@ class CarouselImageExtension extends DataExtension {
 
     /**
      * If $width and $height are greater than 0, it is equivalent to
-     * CroppedImage().
+     * Image_Backend::croppedResize().
      *
      * If only $width is greater than 0, it is equivalent to SetWidth().
      *
@@ -14,7 +14,6 @@ class CarouselImageExtension extends DataExtension {
      * If neither $width or $height are greater than 0, return the
      * original image.
      *
-     * @param  Image_Backend $backend
      * @param  integer $width   The width to set or 0.
      * @param  integer $height  The height to set or 0.
      * @return Image_Backend
@@ -117,20 +116,20 @@ class CarouselPage extends Page {
     public function getCMSFields() {
         $fields = parent::getCMSFields();
 
-        $field = new SortableUploadField('Images', _t('CarouselPage.db_Images'));
+        $field = SortableUploadField::create('Images', _t('CarouselPage.db_Images'));
         $field->setFolderName($this->getClassFolder());
 
         // Enable HTML caption handling if captions are enabled
         if ($this->Captions) {
-            $caption = new CarouselCaptionField('Content', _t('CarouselPage.Caption'));
-            $field->setFileEditFields(new FieldList($caption));
+            $caption = CarouselCaptionField::create('Content', _t('CarouselPage.Caption'));
+            $field->setFileEditFields(FieldList::create($caption));
             unset($caption);
         }
 
         $root = $fields->fieldByName('Root');
         $tab = $root->fieldByName('Images');
         if (! $tab) {
-            $tab = new Tab('Images');
+            $tab = Tab::create('Images');
             $tab->setTitle(_t('CarouselPage.db_Images'));
             $root->insertAfter($tab, 'Main');
         }
@@ -142,28 +141,22 @@ class CarouselPage extends Page {
     public function getSettingsFields() {
         $fields = parent::getSettingsFields();
 
-        $group = new FieldGroup();
-        $group->setName('Carousel');
-        $group->setTitle(_t('CarouselPage.SINGULARNAME'));
-        $fields->addFieldToTab('Root.Settings', $group);
-
-        $subgroup = new FieldGroup();
-        $group->push($subgroup);
-
-        $field = new NumericField('Width', _t('CarouselPage.db_Width'));
-        $subgroup->push($field);
-
-        $field = new NumericField('Height', _t('CarouselPage.db_Height'));
-        $subgroup->push($field);
-
-        $field = new CheckboxField('Captions', _t('CarouselPage.db_Captions'));
-        $subgroup->push($field);
+        $settings = FieldGroup::create(
+            FieldGroup::create(
+                NumericField::create('Width', _t('CarouselPage.db_Width')),
+                NumericField::create('Height', _t('CarouselPage.db_Height')),
+                CheckboxField::create('Captions', _t('CarouselPage.db_Captions'))
+            )
+        );
+        $settings->setName('Carousel');
+        $settings->setTitle(_t('CarouselPage.SINGULARNAME'));
+        $fields->addFieldToTab('Root.Settings', $settings);
 
         return $fields;
     }
 
     public function getCMSValidator() {
-        return new RequiredFields(
+        return RequiredFields::create(
             'ThumbnailWidth',
             'ThumbnailHeight'
         );
