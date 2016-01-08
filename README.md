@@ -23,6 +23,22 @@ hierarchy. If, for example, you inherit your `HomePage` type from
 `CarouselPage`, the code will look for any `Home` or `Carousel` folder
 (in this order) under your assets directory.
 
+Installation
+------------
+
+The feature of reordering with drag and drop is provided by the
+[sortablefile](https://github.com/bummzack/sortablefile) module that
+*must* be installed before.
+
+To install silverstripe-carousel itself you should proceed as usual:
+drop the directory tree in your SilverStripe root and do a
+`/dev/build/`. You will gain the new `CarouselPage` type in the CMS.
+
+If you use [composer](https://getcomposer.org/), the dependencies will
+be pulled-in automatically, so you could just run the following command:
+
+    composer require entidi/silverstripe-carousel
+
 Usage
 -----
 
@@ -77,8 +93,8 @@ _Image list_ tab by clicking the _Edit_ button.
 When `Content` is not defined, an `<h4>` element with the image title is
 used instead: see `templates/Includes/ImageCaption.ss` for details.
 
-Author
-------
+Support
+-------
 
 This project has been developed by [ntd](mailto:ntd@entidi.it). Its
 [home page](http://silverstripe.entidi.com/) is shared by other
@@ -88,19 +104,3 @@ To check out the code, report issues or propose enhancements, go to the
 [dedicated tracker](http://dev.entidi.com/p/silverstripe-carousel).
 Alternatively, you can do the same things by leveraging the official
 [github repository](https://github.com/ntd/silverstripe-carousel).
-
-Installation
-------------
-
-The feature of reordering with drag and drop is provided by the
-[sortablefile](https://github.com/bummzack/sortablefile) module that
-*must* be installed before.
-
-To install silverstripe-carousel itself you should proceed as usual:
-drop the directory tree in your SilverStripe root and do a
-`/dev/build/`. You will gain the new `CarouselPage` type in the CMS.
-
-If you use [composer](https://getcomposer.org/), the dependencies will
-be pulled-in automatically, so you could just run the following command:
-
-    composer require entidi/silverstripe-carousel dev-master
