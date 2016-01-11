@@ -1,6 +1,7 @@
 <?php
 
-class CarouselImageExtension extends DataExtension {
+class CarouselImageExtension extends DataExtension
+{
 
     /**
      * If $width and $height are greater than 0, it is equivalent to
@@ -18,11 +19,13 @@ class CarouselImageExtension extends DataExtension {
      * @param  integer $height  The height to set or 0.
      * @return Image_Backend
      */
-    public function MaybeCroppedImage($width, $height) {
+    public function MaybeCroppedImage($width, $height)
+    {
         return $this->owner->getFormattedImage('MaybeCroppedImage', $width, $height);
     }
 
-    public function generateMaybeCroppedImage(Image_Backend $backend, $width, $height) {
+    public function generateMaybeCroppedImage(Image_Backend $backend, $width, $height)
+    {
         if ($width > 0 && $height > 0) {
             return $backend->croppedResize($width, $height);
         } elseif ($width > 0) {
@@ -41,9 +44,11 @@ class CarouselImageExtension extends DataExtension {
  * using HtmlEditorField will result in an error when the 'saveInto'
  * method is called.
  */
-class CarouselCaptionField extends HtmlEditorField {
+class CarouselCaptionField extends HtmlEditorField
+{
 
-    public function __construct($name, $title = null, $value = '') {
+    public function __construct($name, $title = null, $value = '')
+    {
         parent::__construct($name, $title, $value);
         $this->rows = 5;
         // The .htmleditor class enables TinyMCE
@@ -54,11 +59,12 @@ class CarouselCaptionField extends HtmlEditorField {
      * Implementation directly borrowed from HtmlEditorField
      * without the blocking or useless code.
      */
-    public function saveInto(DataObjectInterface $record) {
+    public function saveInto(DataObjectInterface $record)
+    {
         $htmlValue = Injector::inst()->create('HTMLValue', $this->value);
 
         // Sanitise if requested
-        if($this->config()->sanitise_server_side) {
+        if ($this->config()->sanitise_server_side) {
             $santiser = Injector::inst()->create('HtmlEditorSanitiser', HtmlEditorConfig::get_active());
             $santiser->sanitise($htmlValue);
         }
@@ -68,7 +74,8 @@ class CarouselCaptionField extends HtmlEditorField {
     }
 }
 
-class CarouselPage extends Page {
+class CarouselPage extends Page
+{
 
     private static $icon = 'carousel/img/carousel.png';
 
@@ -101,11 +108,13 @@ class CarouselPage extends Page {
      *
      * If no valid folders are found, `false` is returned.
      */
-    protected function getClassFolder() {
+    protected function getClassFolder()
+    {
         for ($class = $this->class; $class; $class = get_parent_class($class)) {
             $folder = preg_replace('/Page$/', '', $class);
-            if ($folder != $class && is_dir(ASSETS_PATH . '/' . $folder))
+            if ($folder != $class && is_dir(ASSETS_PATH . '/' . $folder)) {
                 return $folder;
+            }
         }
 
         // false is the proper value to set in setFolderName()
@@ -113,7 +122,8 @@ class CarouselPage extends Page {
         return false;
     }
 
-    public function getCMSFields() {
+    public function getCMSFields()
+    {
         $fields = parent::getCMSFields();
 
         $field = SortableUploadField::create('Images', _t('CarouselPage.db_Images'));
@@ -138,7 +148,8 @@ class CarouselPage extends Page {
         return $fields;
     }
 
-    public function getSettingsFields() {
+    public function getSettingsFields()
+    {
         $fields = parent::getSettingsFields();
 
         $settings = FieldGroup::create(
@@ -155,7 +166,8 @@ class CarouselPage extends Page {
         return $fields;
     }
 
-    public function getCMSValidator() {
+    public function getCMSValidator()
+    {
         return RequiredFields::create(
             'ThumbnailWidth',
             'ThumbnailHeight'
@@ -168,10 +180,12 @@ class CarouselPage extends Page {
      * It the translatable module is not used, this will simply be a
      * dead method.
     */
-    public function onTranslatableCreate($save) {
+    public function onTranslatableCreate($save)
+    {
         // Chain up the parent method, if it exists
-        if (method_exists('Page', 'onTranslatableCreate'))
+        if (method_exists('Page', 'onTranslatableCreate')) {
             parent::onTranslatableCreate($save);
+        }
 
         $master = $this->getTranslation(Translatable::default_locale());
 
@@ -182,13 +196,15 @@ class CarouselPage extends Page {
     }
 }
 
-class CarouselPage_Controller extends Page_Controller {
+class CarouselPage_Controller extends Page_Controller
+{
 
     /**
      * From the controller the images are returned in proper order.
      * This means `<% loop $Images %>` returns the expected result.
      */
-    public function Images() {
+    public function Images()
+    {
         return $this->dataRecord->Images()->Sort('SortOrder');
     }
 }
