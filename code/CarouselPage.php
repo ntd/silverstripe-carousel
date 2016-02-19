@@ -1,9 +1,15 @@
 <?php
 
+/**
+ * Provide additional methods specially crafted for carousels.
+ *
+ * @package silverstripe-carousel
+ */
 class CarouselImageExtension extends DataExtension
 {
-
     /**
+     * Generate a scaled image suitable for a carousel.
+     *
      * If $width and $height are greater than 0, it is equivalent to
      * Image_Backend::croppedResize().
      *
@@ -24,6 +30,14 @@ class CarouselImageExtension extends DataExtension
         return $this->owner->getFormattedImage('MaybeCroppedImage', $width, $height);
     }
 
+    /**
+     * Low level function for CarouselImageExtension::MaybeCroppedImage().
+     *
+     * @param  Image_Backend $backend
+     * @param  integer $width
+     * @param  integer $height
+     * @return Image_Backend
+     */
     public function generateMaybeCroppedImage(Image_Backend $backend, $width, $height)
     {
         if ($width > 0 && $height > 0) {
@@ -43,10 +57,18 @@ class CarouselImageExtension extends DataExtension
  * 'File' table with the WYSIWYG editor. That field is TEXT, hence just
  * using HtmlEditorField will result in an error when the 'saveInto'
  * method is called.
+ *
+ * @package silverstripe-carousel
  */
 class CarouselCaptionField extends HtmlEditorField
 {
-
+    /**
+     * Override the default constructor to have saner settings.
+     *
+     * @param string $name  The internal field name, passed to forms.
+     * @param string $title The human-readable field label.
+     * @param mixed  $value The value of the field.
+     */
     public function __construct($name, $title = null, $value = '')
     {
         parent::__construct($name, $title, $value);
@@ -58,6 +80,8 @@ class CarouselCaptionField extends HtmlEditorField
     /**
      * Implementation directly borrowed from HtmlEditorField
      * without the blocking or useless code.
+     *
+     * @param DataObjectInterface $record
      */
     public function saveInto(DataObjectInterface $record)
     {
@@ -74,9 +98,13 @@ class CarouselCaptionField extends HtmlEditorField
     }
 }
 
+/**
+ * Basic page type owning a carousel.
+ *
+ * @package silverstripe-carousel
+ */
 class CarouselPage extends Page
 {
-
     private static $icon = 'carousel/img/carousel.png';
 
     private static $db = array(
@@ -107,6 +135,8 @@ class CarouselPage extends Page
      * `Carousel` after.
      *
      * If no valid folders are found, `false` is returned.
+     *
+     * @return string|false
      */
     protected function getClassFolder()
     {
@@ -117,11 +147,20 @@ class CarouselPage extends Page
             }
         }
 
-        // false is the proper value to set in setFolderName()
-        // to get the default folder (usually 'Uploads').
+        // Why false? Because false is the proper value to set in
+        // setFolderName() to get the default folder (i.e. 'Uploads').
         return false;
     }
 
+    /**
+     * Add the "Images" tab to the content form of the page.
+     *
+     * The images are linked to the page with a many-many relationship,
+     * so if an image is shared among different carousels there is no
+     * need to upload it multiple times.
+     *
+     * @return FieldList
+     */
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
@@ -148,6 +187,14 @@ class CarouselPage extends Page
         return $fields;
     }
 
+    /**
+     * Add carousel related fields to the page settings.
+     *
+     * Every CarouselPage instance can have its own settings, that is
+     * different pages can own carousels of different sizes.
+     *
+     * @return FieldList
+     */
     public function getSettingsFields()
     {
         $fields = parent::getSettingsFields();
@@ -166,6 +213,15 @@ class CarouselPage extends Page
         return $fields;
     }
 
+    /**
+     * Ensure ThumbnailWidth and ThumbnailHeight are valorized.
+     *
+     * Although width and height for the images in the carousel can be
+     * omitted (see CarouselImageExtension::MaybeCroppedImage() for
+     * algorithm details) the thumbnail extents must be defined.
+     *
+     * @return Validator
+     */
     public function getCMSValidator()
     {
         return RequiredFields::create(
@@ -177,9 +233,13 @@ class CarouselPage extends Page
     /**
      * Out of the box support for silverstripe/silverstripe-translatable.
      *
+     * Duplicate the image list whenever a new translation is created.
      * It the translatable module is not used, this will simply be a
      * dead method.
-    */
+     *
+     * @param boolean $save Whether the new page should be saved to the
+     *                      database.
+     */
     public function onTranslatableCreate($save)
     {
         // Chain up the parent method, if it exists
@@ -196,9 +256,13 @@ class CarouselPage extends Page
     }
 }
 
+/**
+ * Controller for CarouselPage.
+ *
+ * @package silverstripe-carousel
+ */
 class CarouselPage_Controller extends Page_Controller
 {
-
     /**
      * From the controller the images are returned in proper order.
      * This means `<% loop $Images %>` returns the expected result.

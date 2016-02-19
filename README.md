@@ -1,5 +1,8 @@
 Silverstripe Carousel
 =====================
+[![Code Quality](https://scrutinizer-ci.com/g/ntd/silverstripe-carousel/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ntd/silverstripe-carousel/?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/entidi/silverstripe-carousel/v/stable)](https://packagist.org/packages/entidi/silverstripe-carousel)
+
 
 It implements a new page type (_CarouselPage_) that provides everything
 needed to manage a carousel of images. Differently from other carousels,
