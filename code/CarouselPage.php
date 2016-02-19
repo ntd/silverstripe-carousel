@@ -2,7 +2,6 @@
 
 class CarouselImageExtension extends DataExtension
 {
-
     /**
      * If $width and $height are greater than 0, it is equivalent to
      * Image_Backend::croppedResize().
@@ -46,7 +45,6 @@ class CarouselImageExtension extends DataExtension
  */
 class CarouselCaptionField extends HtmlEditorField
 {
-
     public function __construct($name, $title = null, $value = '')
     {
         parent::__construct($name, $title, $value);
@@ -76,7 +74,6 @@ class CarouselCaptionField extends HtmlEditorField
 
 class CarouselPage extends Page
 {
-
     private static $icon = 'carousel/img/carousel.png';
 
     private static $db = array(
@@ -198,7 +195,6 @@ class CarouselPage extends Page
 
 class CarouselPage_Controller extends Page_Controller
 {
-
     /**
      * From the controller the images are returned in proper order.
      * This means `<% loop $Images %>` returns the expected result.
