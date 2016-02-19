@@ -65,9 +65,9 @@ class CarouselCaptionField extends HtmlEditorField
     /**
      * Override the default constructor to have saner settings.
      *
-     * @param string $name  The internal field name, passed to forms.
-     * @param string $title The human-readable field label.
-     * @param mixed  $value The value of the field.
+     * @param string      $name  The internal field name, passed to forms.
+     * @param string|null $title The human-readable field label.
+     * @param mixed       $value The value of the field.
      */
     public function __construct($name, $title = null, $value = '')
     {
