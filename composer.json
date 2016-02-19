@@ -18,7 +18,7 @@
         "source": "http://dev.entidi.com/p/silverstripe-carousel/source/tree/master/"
     },
     "require": {
-        "silverstripe/framework": "~3.1",
+        "silverstripe/cms": "~3.1",
         "bummzack/sortablefile": "~1.2"
     },
     "extra": {
