@@ -1,5 +1,6 @@
 Silverstripe Carousel
 =====================
+[![Latest Stable Version](https://poser.pugx.org/entidi/silverstripe-carousel/v/stable)](https://packagist.org/packages/entidi/silverstripe-carousel)
 
 It implements a new page type (_CarouselPage_) that provides everything
 needed to manage a carousel of images. Differently from other carousels,
