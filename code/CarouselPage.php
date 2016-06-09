@@ -50,6 +50,25 @@ class CarouselImageExtension extends DataExtension
             return $backend;
         }
     }
+
+    /**
+     * Retrieve the fields used by SortableUploadField internal form.
+     *
+     * @return FieldList
+     */
+    public function getCarouselEditFields()
+    {
+        // This is *required* otherwise TinyMCE in SilverStripe 3.3 will
+        // not be enabled and the <textarea> will simply disappear
+        // without apparent reasons
+        if (method_exists('HtmlEditorConfig', 'require_js')) {
+            HtmlEditorConfig::require_js();
+        }
+
+        $fields = FieldList::create();
+        $fields->push(CarouselCaptionField::create('Content', _t('CarouselPage.Caption')));
+        return $fields;
+    }
 }
 
 /**
@@ -65,9 +84,9 @@ class CarouselCaptionField extends HtmlEditorField
     /**
      * Override the default constructor to have saner settings.
      *
-     * @param string $name  The internal field name, passed to forms.
-     * @param string $title The human-readable field label.
-     * @param mixed  $value The value of the field.
+     * @param string      $name  The internal field name, passed to forms.
+     * @param string|null $title The human-readable field label.
+     * @param mixed       $value The value of the field.
      */
     public function __construct($name, $title = null, $value = '')
     {
@@ -123,6 +142,7 @@ class CarouselPage extends Page
         ),
     );
 
+
     /**
      * Search the first class name (that must have a 'Page' suffix) in
      * the object hierarchy that has a correspoding folder in
@@ -167,13 +187,7 @@ class CarouselPage extends Page
 
         $field = SortableUploadField::create('Images', _t('CarouselPage.db_Images'));
         $field->setFolderName($this->getClassFolder());
-
-        // Enable HTML caption handling if captions are enabled
-        if ($this->Captions) {
-            $caption = CarouselCaptionField::create('Content', _t('CarouselPage.Caption'));
-            $field->setFileEditFields(FieldList::create($caption));
-            unset($caption);
-        }
+        $field->setFileEditFields('getCarouselEditFields');
 
         $root = $fields->fieldByName('Root');
         $tab = $root->fieldByName('Images');
