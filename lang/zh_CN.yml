@@ -1,0 +1,10 @@
+zh_CN:
+  CarouselPage:
+    SINGULARNAME: '轮播页面'
+    PLURALNAME: '轮播页面'
+    DESCRIPTION: '依次显示一系列图像'
+    Caption: '文字说明'
+    db_Images: '图片列表'
+    db_Captions: '显示图片文字说明'
+    db_Width: '图片宽度'
+    db_Height: '图片高度'
